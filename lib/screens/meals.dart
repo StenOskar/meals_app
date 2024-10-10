@@ -3,16 +3,21 @@ import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/screens/meal_detail.dart';
 import 'package:meals_app/widgets/meal_item.dart';
 
+import '../models/meal_plan.dart';
+
 class MealsScreen extends StatelessWidget {
   const MealsScreen({super.key,
     required this.meals,
     this.title,
     required this.onToggleFavorite,
+    required this.onToggleMealPlanner,
   });
 
   final String? title;
   final List<Meal> meals;
   final void Function(Meal meal) onToggleFavorite;
+  final void Function(Day? day, Meal meal) onToggleMealPlanner;
+  
 
   void selectMeal(BuildContext context, Meal meal) {
     Navigator.of(context).push(
@@ -20,6 +25,7 @@ class MealsScreen extends StatelessWidget {
         builder: (ctx) => MealsDetailScreen(
           meal: meal,
           onToggleFavorite: onToggleFavorite,
+          onToggleMealPlanner: onToggleMealPlanner,
         ),
       ),
     );

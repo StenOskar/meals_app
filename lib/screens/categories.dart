@@ -4,15 +4,18 @@ import 'package:meals_app/screens/meals.dart';
 import 'package:meals_app/widgets/category_grid_item.dart';
 import 'package:meals_app/models/category.dart';
 import '../models/meal.dart';
+import '../models/meal_plan.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({
     super.key,
     required this.onToggleFavorite,
     required this.availableMeals,
+    required this.onToggleMealPlanner,
   });
 
   final void Function(Meal meal) onToggleFavorite;
+  final void Function(Day? day, Meal meal) onToggleMealPlanner;
   final List<Meal> availableMeals;
 
   void _selectCategory(BuildContext context, Category category) {
@@ -26,6 +29,7 @@ class CategoriesScreen extends StatelessWidget {
           title: category.title,
           meals: filteredMeals,
           onToggleFavorite: onToggleFavorite,
+          onToggleMealPlanner: onToggleMealPlanner,
         ),
       ),
     ); // Navigator.push(context, route)

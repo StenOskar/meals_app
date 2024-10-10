@@ -1,0 +1,238 @@
+@startuml
+set namespaceSeparator ::
+
+class "meals_app::main.dart::App" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "meals_app::main.dart::App"
+
+class "meals_app::models::category.dart::Category" {
+  +String id
+  +String title
+  +Color color
+}
+
+"meals_app::models::category.dart::Category" o-- "dart::ui::Color"
+
+class "meals_app::models::meal.dart::Meal" {
+  +String id
+  +List<String> categories
+  +String title
+  +String imageUrl
+  +List<String> ingredients
+  +List<String> steps
+  +int duration
+  +Complexity complexity
+  +Affordability affordability
+  +bool isGlutenFree
+  +bool isLactoseFree
+  +bool isVegan
+  +bool isVegetarian
+}
+
+"meals_app::models::meal.dart::Meal" o-- "meals_app::models::meal.dart::Complexity"
+"meals_app::models::meal.dart::Meal" o-- "meals_app::models::meal.dart::Affordability"
+
+class "meals_app::models::meal.dart::Complexity" {
+  +int index
+  {static} +List<Complexity> values
+  {static} +Complexity simple
+  {static} +Complexity challenging
+  {static} +Complexity hard
+}
+
+"meals_app::models::meal.dart::Complexity" o-- "meals_app::models::meal.dart::Complexity"
+"dart::core::Enum" <|-- "meals_app::models::meal.dart::Complexity"
+
+class "meals_app::models::meal.dart::Affordability" {
+  +int index
+  {static} +List<Affordability> values
+  {static} +Affordability affordable
+  {static} +Affordability pricey
+  {static} +Affordability luxurious
+}
+
+"meals_app::models::meal.dart::Affordability" o-- "meals_app::models::meal.dart::Affordability"
+"dart::core::Enum" <|-- "meals_app::models::meal.dart::Affordability"
+
+class "meals_app::models::meal_plan.dart::MealPlan" {
+  +String meal
+  +String day
+}
+
+class "meals_app::models::meal_plan.dart::Day" {
+  +int index
+  {static} +List<Day> values
+  {static} +Day monday
+  {static} +Day tuesday
+  {static} +Day wednesday
+  {static} +Day thursday
+  {static} +Day friday
+  {static} +Day saturday
+  {static} +Day sunday
+}
+
+"meals_app::models::meal_plan.dart::Day" o-- "meals_app::models::meal_plan.dart::Day"
+"dart::core::Enum" <|-- "meals_app::models::meal_plan.dart::Day"
+
+class "meals_app::screens::categories.dart::CategoriesScreen" {
+  +void Function(Meal) onToggleFavorite
+  +void Function(Day?, Meal) onToggleMealPlanner
+  +List<Meal> availableMeals
+  -void _selectCategory()
+  +Widget build()
+}
+
+"meals_app::screens::categories.dart::CategoriesScreen" o-- "null::void Function(Meal)"
+"meals_app::screens::categories.dart::CategoriesScreen" o-- "null::void Function(Day, Meal)"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "meals_app::screens::categories.dart::CategoriesScreen"
+
+class "meals_app::screens::filters.dart::FilterScreen" {
+  +Map<Filter, bool> currentFilters
+  +State<FilterScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "meals_app::screens::filters.dart::FilterScreen"
+
+class "meals_app::screens::filters.dart::_FilterScreenState" {
+  -bool _glutenFreeFilterSet
+  -bool _lactoseFreeFilterSet
+  -bool _vegetarianFilterSet
+  -bool _veganFilterSet
+  +void initState()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "meals_app::screens::filters.dart::_FilterScreenState"
+
+class "meals_app::screens::filters.dart::Filter" {
+  +int index
+  {static} +List<Filter> values
+  {static} +Filter glutenFree
+  {static} +Filter lactoseFree
+  {static} +Filter vegetarian
+  {static} +Filter vegan
+}
+
+"meals_app::screens::filters.dart::Filter" o-- "meals_app::screens::filters.dart::Filter"
+"dart::core::Enum" <|-- "meals_app::screens::filters.dart::Filter"
+
+class "meals_app::screens::meals.dart::MealsScreen" {
+  +String? title
+  +List<Meal> meals
+  +void Function(Meal) onToggleFavorite
+  +void Function(Day?, Meal) onToggleMealPlanner
+  +void selectMeal()
+  +Widget build()
+}
+
+"meals_app::screens::meals.dart::MealsScreen" o-- "null::void Function(Meal)"
+"meals_app::screens::meals.dart::MealsScreen" o-- "null::void Function(Day, Meal)"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "meals_app::screens::meals.dart::MealsScreen"
+
+class "meals_app::screens::meal_detail.dart::MealsDetailScreen" {
+  +Meal meal
+  +void Function(Meal) onToggleFavorite
+  +void Function(Day?, Meal) onToggleMealPlanner
+  +State<MealsDetailScreen> createState()
+}
+
+"meals_app::screens::meal_detail.dart::MealsDetailScreen" o-- "meals_app::models::meal.dart::Meal"
+"meals_app::screens::meal_detail.dart::MealsDetailScreen" o-- "null::void Function(Meal)"
+"meals_app::screens::meal_detail.dart::MealsDetailScreen" o-- "null::void Function(Day, Meal)"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "meals_app::screens::meal_detail.dart::MealsDetailScreen"
+
+class "meals_app::screens::meal_detail.dart::_MealsDetailScreenState" {
+  +Day? selectedDay
+  +Widget build()
+}
+
+"meals_app::screens::meal_detail.dart::_MealsDetailScreenState" o-- "meals_app::models::meal_plan.dart::Day"
+"flutter::src::widgets::framework.dart::State" <|-- "meals_app::screens::meal_detail.dart::_MealsDetailScreenState"
+
+class "meals_app::screens::meal_planner.dart::MealPlannerScreen" {
+  +void Function(Day?, Meal) onToggleMealPlanner
+  +void Function(Meal) onToggleFavorite
+  +void Function(Day) onRemoveMealPlanner
+  +HashMap<Day, Meal> mealPlan
+  +_MealPlannerScreenState createState()
+}
+
+"meals_app::screens::meal_planner.dart::MealPlannerScreen" o-- "null::void Function(Day, Meal)"
+"meals_app::screens::meal_planner.dart::MealPlannerScreen" o-- "null::void Function(Meal)"
+"meals_app::screens::meal_planner.dart::MealPlannerScreen" o-- "null::void Function(Day)"
+"meals_app::screens::meal_planner.dart::MealPlannerScreen" o-- "dart::collection::HashMap<Day, Meal>"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "meals_app::screens::meal_planner.dart::MealPlannerScreen"
+
+class "meals_app::screens::meal_planner.dart::_MealPlannerScreenState" {
+  +void selectMeal()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "meals_app::screens::meal_planner.dart::_MealPlannerScreenState"
+
+class "meals_app::screens::tabs.dart::TabsScreen" {
+  +State<TabsScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "meals_app::screens::tabs.dart::TabsScreen"
+
+class "meals_app::screens::tabs.dart::_TabsScreenState" {
+  -int _selectedPageIndex
+  -List<Meal> _favoritesMeals
+  +HashMap<Day, Meal> mealPlan
+  -Map<Filter, bool> _selectedFilters
+  -void _showInfoMessage()
+  -void _toggleMealFavoritesStatus()
+  -void _addMealPlannerStatus()
+  -void _removeMealPlannerStatus()
+  -void _selectPage()
+  -void _setScreen()
+  +Widget build()
+}
+
+"meals_app::screens::tabs.dart::_TabsScreenState" o-- "dart::collection::HashMap<Day, Meal>"
+"flutter::src::widgets::framework.dart::State" <|-- "meals_app::screens::tabs.dart::_TabsScreenState"
+
+class "meals_app::widgets::category_grid_item.dart::CategoryGridItem" {
+  +Category category
+  +void Function() onSelectCategory
+  +Widget build()
+}
+
+"meals_app::widgets::category_grid_item.dart::CategoryGridItem" o-- "meals_app::models::category.dart::Category"
+"meals_app::widgets::category_grid_item.dart::CategoryGridItem" o-- "null::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "meals_app::widgets::category_grid_item.dart::CategoryGridItem"
+
+class "meals_app::widgets::main_drawer.dart::MainDrawer" {
+  +void Function(String) onSelectScreen
+  +Widget build()
+}
+
+"meals_app::widgets::main_drawer.dart::MainDrawer" o-- "null::void Function(String)"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "meals_app::widgets::main_drawer.dart::MainDrawer"
+
+class "meals_app::widgets::meal_item.dart::MealItem" {
+  +Meal meal
+  +void Function(Meal) onSelectMeal
+  +String complexityText
+  +String affordabilityText
+  +Widget build()
+}
+
+"meals_app::widgets::meal_item.dart::MealItem" o-- "meals_app::models::meal.dart::Meal"
+"meals_app::widgets::meal_item.dart::MealItem" o-- "null::void Function(Meal)"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "meals_app::widgets::meal_item.dart::MealItem"
+
+class "meals_app::widgets::meal_item_trait.dart::MealItemTrait" {
+  +IconData icon
+  +String label
+  +Widget build()
+}
+
+"meals_app::widgets::meal_item_trait.dart::MealItemTrait" o-- "flutter::src::widgets::icon_data.dart::IconData"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "meals_app::widgets::meal_item_trait.dart::MealItemTrait"
+
+
+@enduml

@@ -1,10 +1,14 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:meals_app/data/dummy_data.dart';
 import 'package:meals_app/screens/categories.dart';
 import 'package:meals_app/screens/filters.dart';
+import 'package:meals_app/screens/meal_planner.dart';
 import 'package:meals_app/screens/meals.dart';
 import 'package:meals_app/widgets/main_drawer.dart';
 import '../models/meal.dart';
+import '../models/meal_plan.dart';
 
 const kInitialFilters = {
   Filter.glutenFree: false,
@@ -25,6 +29,7 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   int _selectedPageIndex = 0;
   final List<Meal> _favoritesMeals = [];
+  final HashMap<Day, Meal> mealPlan = HashMap();
   Map<Filter, bool> _selectedFilters = kInitialFilters;
 
   void _showInfoMessage(String message) {
@@ -48,6 +53,34 @@ class _TabsScreenState extends State<TabsScreen> {
     } else {
       _favoritesMeals.add(meal);
       _showInfoMessage("Marked as a favorite");
+    }
+  }
+
+  void _addMealPlannerStatus(Day? day, Meal meal) {
+    final isExisting = mealPlan.containsKey(day);
+
+    if (day == null) {
+      _showInfoMessage("Please select a day");
+    } else if (isExisting) {
+      _showInfoMessage("There is already a meal added for ${day.name}");
+    } else {
+      setState(() {
+        mealPlan[day] = meal;
+      });
+      _showInfoMessage("Meal was added to the meal planner");
+    }
+  }
+
+  void _removeMealPlannerStatus(Day day) {
+    final isExisting = mealPlan.containsKey(day);
+
+    if (!isExisting) {
+      _showInfoMessage("There is no meal added for ${day.name}");
+    } else {
+      setState(() {
+        mealPlan.remove(day);
+      });
+      _showInfoMessage("Meal was removed from the meal planner");
     }
   }
 
@@ -91,6 +124,7 @@ class _TabsScreenState extends State<TabsScreen> {
 
     Widget activePage = CategoriesScreen(
       onToggleFavorite: _toggleMealFavoritesStatus,
+      onToggleMealPlanner: _addMealPlannerStatus,
       availableMeals: availableMeals,
     );
     var activePageTitle = "Categories";
@@ -99,8 +133,19 @@ class _TabsScreenState extends State<TabsScreen> {
       activePage = MealsScreen(
         meals: _favoritesMeals,
         onToggleFavorite: _toggleMealFavoritesStatus,
+        onToggleMealPlanner: _addMealPlannerStatus,
       );
       activePageTitle = "Your Favorites";
+    }
+
+    if (_selectedPageIndex == 2) {
+      activePage = MealPlannerScreen(
+        mealPlan: mealPlan,
+        onToggleFavorite: _toggleMealFavoritesStatus,
+        onToggleMealPlanner: _addMealPlannerStatus,
+        onRemoveMealPlanner: _removeMealPlannerStatus,
+      );
+      activePageTitle = "Meal Planner";
     }
 
     return Scaffold(
@@ -117,7 +162,10 @@ class _TabsScreenState extends State<TabsScreen> {
         items: const [
           BottomNavigationBarItem(
               icon: Icon(Icons.set_meal), label: "Categories"),
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: "Favorites"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.star), label: "Favorites"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_view_week), label: "Meal planner"),
         ],
       ),
     );
