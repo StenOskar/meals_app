@@ -36,6 +36,8 @@ class _TabsScreenState extends State<TabsScreen> {
   final HashMap<Day, Meal> mealPlan = HashMap();
   Map<Filter, bool> _selectedFilters = kInitialFilters;
 
+  /// Shows a message to the user. The message is displayed at the bottom of the
+  /// screen.
   void _showInfoMessage(String message) {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -45,6 +47,9 @@ class _TabsScreenState extends State<TabsScreen> {
     );
   }
 
+  /// Toggles the favorite status of a meal. If the meal is already a favorite,
+  /// it is removed from the favorites list. If the meal is not a favorite, it is
+  /// added to the favorites list.
   void _toggleMealFavoritesStatus(Meal meal) {
     final isExisting = _favoritesMeals.contains(meal);
 
@@ -60,6 +65,9 @@ class _TabsScreenState extends State<TabsScreen> {
     }
   }
 
+  /// Adds a meal to the meal planner. If a meal is already added for the day,
+  /// the user is shown an error message. If a day is not selected, the user is
+  /// shown an error message.
   void _addMealPlannerStatus(Day? day, Meal meal) {
     final isExisting = mealPlan.containsKey(day);
 
@@ -75,6 +83,9 @@ class _TabsScreenState extends State<TabsScreen> {
     }
   }
 
+  /// Removes a meal from the meal planner. If a meal is not added for the day,
+  /// the user is shown an error message. If a day is not selected, the user is
+  /// shown an error message.
   void _removeMealPlannerStatus(Day day) {
     final isExisting = mealPlan.containsKey(day);
 
@@ -88,12 +99,15 @@ class _TabsScreenState extends State<TabsScreen> {
     }
   }
 
+  /// Selects the page to display based on the index of the selected tab.
+  /// The index is used to determine which page to display.
   void _selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
     });
   }
 
+  /// Sets the screen to display based on the identifier.
   void _setScreen(String identifier) async {
     Navigator.of(context).pop();
     if (identifier == "filters") {
