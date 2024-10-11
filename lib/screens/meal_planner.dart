@@ -51,7 +51,7 @@ class MealPlannerScreenState extends State<MealPlannerScreen> {
                 return Column(
                   children: [
                     Text(
-                      day.name,
+                      day.name[0].toUpperCase() + day.name.substring(1),
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onSurface,
                         fontSize: 20,
