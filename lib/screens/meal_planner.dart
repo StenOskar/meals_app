@@ -1,18 +1,21 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:meals_app/models/meal_plan.dart';
+import 'package:meals_app/models/day.dart';
 import 'package:meals_app/widgets/meal_item.dart';
 import '../models/meal.dart';
 import 'meal_detail.dart';
 
+/// The screen that displays the meal planner. The meal planner allows users to
+/// select a meal for each day of the week. The user can also remove a meal from
+/// a day by swiping it away.
 class MealPlannerScreen extends StatefulWidget {
   const MealPlannerScreen(
       {super.key,
-      required this.onToggleMealPlanner,
-      required this.onToggleFavorite,
-      required this.mealPlan,
-      required this.onRemoveMealPlanner});
+        required this.onToggleMealPlanner,
+        required this.onToggleFavorite,
+        required this.mealPlan,
+        required this.onRemoveMealPlanner});
 
   final void Function(Day? day, Meal meal) onToggleMealPlanner;
   final void Function(Meal meal) onToggleFavorite;
@@ -20,10 +23,10 @@ class MealPlannerScreen extends StatefulWidget {
   final HashMap<Day, Meal> mealPlan;
 
   @override
-  _MealPlannerScreenState createState() => _MealPlannerScreenState();
+  MealPlannerScreenState createState() => MealPlannerScreenState();
 }
 
-class _MealPlannerScreenState extends State<MealPlannerScreen> {
+class MealPlannerScreenState extends State<MealPlannerScreen> {
   void selectMeal(BuildContext context, Meal meal) {
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -57,7 +60,8 @@ class _MealPlannerScreenState extends State<MealPlannerScreen> {
                       textAlign: TextAlign.left,
                     ),
                     mealPlan.containsKey(day)
-                        ? Dismissible( // Wrap only MealItem with Dismissible
+                        ? Dismissible(
+                      // Wrap only MealItem with Dismissible
                       key: ValueKey(mealPlan[day]),
                       onDismissed: (direction) {
                         widget.onRemoveMealPlanner(day);
@@ -69,10 +73,12 @@ class _MealPlannerScreenState extends State<MealPlannerScreen> {
                         },
                       ),
                     )
-                        : const Text('No meal selected', style: TextStyle(
+                        : const Text(
+                      'No meal selected',
+                      style: TextStyle(
                         color: Colors.white54,
                         fontSize: 12,
-                    ),
+                      ),
                     ),
                     const SizedBox(height: 16),
                   ],

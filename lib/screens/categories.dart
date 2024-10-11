@@ -4,8 +4,12 @@ import 'package:meals_app/screens/meals.dart';
 import 'package:meals_app/widgets/category_grid_item.dart';
 import 'package:meals_app/models/category.dart';
 import '../models/meal.dart';
-import '../models/meal_plan.dart';
+import '../models/day.dart';
 
+
+/// The screen that displays the available categories of meals. The user can
+/// select a category to view the meals in that category. If the user selects a
+/// category with no meals, a message is displayed.
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({
     super.key,

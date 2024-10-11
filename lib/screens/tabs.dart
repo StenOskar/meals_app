@@ -8,8 +8,9 @@ import 'package:meals_app/screens/meal_planner.dart';
 import 'package:meals_app/screens/meals.dart';
 import 'package:meals_app/widgets/main_drawer.dart';
 import '../models/meal.dart';
-import '../models/meal_plan.dart';
+import '../models/day.dart';
 
+/// Sets the initial filters for the app.
 const kInitialFilters = {
   Filter.glutenFree: false,
   Filter.lactoseFree: false,
@@ -17,6 +18,9 @@ const kInitialFilters = {
   Filter.vegan: false
 };
 
+/// The screen that displays the tabs for the app. The user can navigate to
+/// different screens by tapping on the tabs. The user can also access the
+/// filters screen by tapping on the filter icon in the left hand menu.
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
 

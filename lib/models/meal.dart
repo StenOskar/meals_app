@@ -1,15 +1,7 @@
-  enum Complexity {
-  simple,
-  challenging,
-  hard,
-}
-
-enum Affordability {
-  affordable,
-  pricey,
-  luxurious,
-}
-
+///This class is used to store the data of a meal. It contains all the
+/// information about a meal, such as its id, categories, title, image URL,
+/// ingredients, steps, duration, complexity,
+/// affordability, and dietary restrictions.
 class Meal {
   const Meal({
     required this.id,
@@ -40,4 +32,16 @@ class Meal {
   final bool isLactoseFree;
   final bool isVegan;
   final bool isVegetarian;
+}
+
+enum Complexity {
+  simple,
+  challenging,
+  hard,
+}
+
+enum Affordability {
+  affordable,
+  pricey,
+  luxurious,
 }

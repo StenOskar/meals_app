@@ -3,8 +3,11 @@ import 'package:meals_app/models/meal.dart';
 import 'package:meals_app/screens/meal_detail.dart';
 import 'package:meals_app/widgets/meal_item.dart';
 
-import '../models/meal_plan.dart';
+import '../models/day.dart';
 
+/// The screen that displays the meals for a given category. The user can select
+/// a meal to view more details. The user can also favorite a meal or add it to
+/// the meal planner.
 class MealsScreen extends StatelessWidget {
   const MealsScreen({super.key,
     required this.meals,
@@ -17,7 +20,7 @@ class MealsScreen extends StatelessWidget {
   final List<Meal> meals;
   final void Function(Meal meal) onToggleFavorite;
   final void Function(Day? day, Meal meal) onToggleMealPlanner;
-  
+
 
   void selectMeal(BuildContext context, Meal meal) {
     Navigator.of(context).push(
@@ -40,15 +43,15 @@ class MealsScreen extends StatelessWidget {
           Text(
             'Uh oh ... nothing here!',
             style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
           const SizedBox(height: 16),
           Text(
             'Try selecting a different category!',
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
         ],
       ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/models/meal.dart';
 
-import '../models/meal_plan.dart';
+import '../models/day.dart';
 
+/// The screen that displays the details of a meal. The user can favorite the
+/// meal or add it to the meal planner.
 class MealsDetailScreen extends StatefulWidget {
   const MealsDetailScreen({
     super.key,
@@ -11,6 +13,7 @@ class MealsDetailScreen extends StatefulWidget {
     required this.onToggleMealPlanner,
   });
 
+  /// The meal to display.
   final Meal meal;
   final void Function(Meal meal) onToggleFavorite;
   final void Function(Day? day, Meal meal) onToggleMealPlanner;
@@ -107,7 +110,7 @@ class _MealsDetailScreenState extends State<MealsDetailScreen> {
                 ),
                 IconButton(
                   onPressed: () {
-                      widget.onToggleMealPlanner(selectedDay, widget.meal);
+                    widget.onToggleMealPlanner(selectedDay, widget.meal);
                   },
                   icon: const Icon(
                     Icons.add,

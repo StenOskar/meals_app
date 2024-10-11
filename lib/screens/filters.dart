@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/screens/tabs.dart';
-import 'package:meals_app/widgets/main_drawer.dart';
 
+/// The available filters for meals.
 enum Filter {
   glutenFree,
   lactoseFree,
@@ -9,6 +8,9 @@ enum Filter {
   vegan,
 }
 
+/// The screen that displays the filters for meals. This screen allows
+/// the user to toggle the filters. You will be able to access the
+/// screen by tapping on the filter icon in the left hand menu.
 class FilterScreen extends StatefulWidget {
   const FilterScreen({
     super.key,
@@ -68,14 +70,14 @@ class _FilterScreenState extends State<FilterScreen> {
               title: Text(
                 "Gluten-free ",
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
               ),
               subtitle: Text(
                 "Only include gluten-free meals",
                 style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
               ),
               activeColor: Theme.of(context).colorScheme.tertiary,
               contentPadding: const EdgeInsets.only(left: 34, right: 22),
@@ -90,14 +92,14 @@ class _FilterScreenState extends State<FilterScreen> {
               title: Text(
                 "Lactose-free ",
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
               ),
               subtitle: Text(
                 "Only include lactose-free meals",
                 style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
               ),
               activeColor: Theme.of(context).colorScheme.tertiary,
               contentPadding: const EdgeInsets.only(left: 34, right: 22),
@@ -112,14 +114,14 @@ class _FilterScreenState extends State<FilterScreen> {
               title: Text(
                 "Vegetarian",
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
               ),
               subtitle: Text(
                 "Only include vegetarian meals",
                 style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
               ),
               activeColor: Theme.of(context).colorScheme.tertiary,
               contentPadding: const EdgeInsets.only(left: 34, right: 22),
@@ -134,14 +136,14 @@ class _FilterScreenState extends State<FilterScreen> {
               title: Text(
                 "Vegan",
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
               ),
               subtitle: Text(
                 "Only include vegan meals",
                 style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
               ),
               activeColor: Theme.of(context).colorScheme.tertiary,
               contentPadding: const EdgeInsets.only(left: 34, right: 22),
